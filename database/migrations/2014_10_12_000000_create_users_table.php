@@ -42,7 +42,7 @@ class CreateUsersTable extends Migration
             $table->string('userrole');
             $table->string('status');
 
-
+            
             $table->rememberToken();
             $table->timestamps();
         });

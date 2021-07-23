@@ -22,9 +22,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
-Route::post('register', [RegisterController::class, 'register']);
-Route::post('login', [RegisterController::class, 'login']);
-     
+Route::post('register', [RegisterController::class, 'register']);                            // Route for Register
+Route::post('login', [RegisterController::class, 'login']);                                  // Route for Login
+Route::get('Users', 'App\Http\Controllers\API\RegisterController@showusersdata');            // Route to check All Users Data
+Route::get('user/{id}', 'App\Http\Controllers\API\RegisterController@User_id');              // Route to find user by id
+Route::post('Updae/{id}','App\Http\Controllers\API\RegisterController@Updateuserdata');      // Route to update User data
+Route::post('newuser', 'App\Http\Controllers\API\RegisterController@newuser');               // Route To add New user by admin
+Route::get('Profile', 'App\Http\Controllers\API\RegisterController@newuser');                // Route for Profile
+// Route::get('logout', 'App\Http\Controllers\API\RegisterController@logout');               // Route For Logout
+Route::post('updatepassword{id}', 'App\Http\Controllers\API\RegisterController@changepassword'); //route For Chage password
+
+
 Route::middleware('auth:api')->group( function () {
     Route::resource('products', ProductController::class);
 });
