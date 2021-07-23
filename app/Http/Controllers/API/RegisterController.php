@@ -302,7 +302,6 @@ class RegisterController extends BaseController
     //           'message' => 'Unable to Logout'
     //         ]); 
     //   }
-
     if (Auth::check()) {
         Auth::user()->AauthAcessToken()->delete();
         return response()->json([
@@ -316,5 +315,4 @@ class RegisterController extends BaseController
      }
         
      }
-
 }
