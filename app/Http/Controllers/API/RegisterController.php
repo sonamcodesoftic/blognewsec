@@ -7,6 +7,8 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Hash;
+use App\Rules\MatchOldPassword;
 
 use Jenssegers\Agent\Agent;
    
@@ -99,7 +101,7 @@ class RegisterController extends BaseController
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+            $success['token'] =  $user->createToken('name')-> accessToken; 
             $success['name'] =  $user->name;
    
             // return $this->sendResponse($success, 'User login successfully.');
@@ -255,14 +257,14 @@ class RegisterController extends BaseController
 
 
      // Function for Change Password
-     public function changepassword(Request $request, $id)
-     {
-        $input = User::find($id);
-        $req = bcrypt($input['newpassword']);
-        $input->password =$req;
-        $input->update();  
-        return "Updated";
-     }
+    //  public function changepassword(Request $request, $id)
+    //  {
+    //     $input = User::find($id);
+    //     $req = bcrypt($input['newpassword']);
+    //     $input->password =$req;
+    //     $input->update();  
+    //     return "Updated";
+    //  }
 
      //Function for logout
     // public function logoutApi()
@@ -285,34 +287,73 @@ class RegisterController extends BaseController
 
 
     
-    public function logout(Request $request)
-    {
+    // public function logout(Request $request)
+    // {
     
-    //     if (Auth::user()) {
-    //         $user = Auth::user()->token();
-    //         $user->revoke();
+    // //     if (Auth::user()) {
+    // //         $user = Auth::user()->token();
+    // //         $user->revoke();
     
-    //         return response()->json([
-    //           'success' => true,
-    //           'message' => 'Logout successfully'
-    //       ]);
-    //       }else {
-    //         return response()->json([
-    //           'success' => false,
-    //           'message' => 'Unable to Logout'
-    //         ]); 
-    //   }
-    if (Auth::check()) {
-        Auth::user()->AauthAcessToken()->delete();
-        return response()->json([
-           "message" => "you are logout"
-        ]);
-     }
-     else{
-         return response()->json([
-              "message" => "Logout not working "
-         ]);
-     }
+    // //         return response()->json([
+    // //           'success' => true,
+    // //           'message' => 'Logout successfully'
+    // //       ]);
+    // //       }else {
+    // //         return response()->json([
+    // //           'success' => false,
+    // //           'message' => 'Unable to Logout'
+    // //         ]); 
+    // //   }
+    // if (Auth::check()) {
+    //     Auth::user()->AauthAcessToken()->delete();
+    //     return response()->json([
+    //        "message" => "you are logout"
+    //     ]);
+    //  }
+    //  else{
+    //      return response()->json([
+    //           "message" => "Logout not working "
+    //      ]);
+    //  }
         
-     }
+    //  }
+
+    // public function logout(Request $res , $id)
+    // {
+    //   if (Auth::user()) {
+    //     $user = Auth::user()->token();
+    //     $user->revoke();
+
+    //     return response()->json([
+    //       'success' => true,
+    //       'message' => 'Logout successfully'
+    //   ]);
+    //   }else {
+    //     return response()->json([
+    //       'success' => false,
+    //       'message' => 'Unable to Logout'
+    //     ]);
+    //   }
+
+    
+
+
+
+
+
+     //Change Password Start
+    public function store(Request $request, $id)
+    {
+       
+       $input = User::find($id);
+       
+     
+       $request->validate([
+             'password' => ['required'],
+             'new_password' => ['required'],
+             'new_confirm_password' => ['same:new_password'],
+          ]);
+        $input->update(['password' => Hash::make($request->new_password)]);
+    }
+     //change password Ends
 }

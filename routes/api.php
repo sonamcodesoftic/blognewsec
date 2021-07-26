@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\ChangePasswordController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,9 +30,18 @@ Route::get('user/{id}', 'App\Http\Controllers\API\RegisterController@User_id'); 
 Route::post('Updae/{id}','App\Http\Controllers\API\RegisterController@Updateuserdata');      // Route to update User data
 Route::post('newuser', 'App\Http\Controllers\API\RegisterController@newuser');               // Route To add New user by admin
 Route::get('Profile', 'App\Http\Controllers\API\RegisterController@newuser');                // Route for Profile
-// Route::get('logout', 'App\Http\Controllers\API\RegisterController@logout');               // Route For Logout
-Route::post('updatepassword{id}', 'App\Http\Controllers\API\RegisterController@changepassword'); //route For Chage password
+Route::get('logout', 'App\Http\Controllers\API\RegisterController@logout');               // Route For Logout
 
+
+//change password Routes start
+
+// Route::post('updatepassword{id}', 'App\Http\Controllers\API\RegisterController@changepassword'); //route For Chage password
+// Route::post('changepassword/{id}', 'App\Http\Controllers\ChangePasswordController@store');
+// Route::post('storepost/{id}', 'App\Http\Controllers\ChangePasswordController@store');
+// Route::group(['middleware' => ['admin']]);
+Route::post('changepass/{id}', 'App\Http\Controllers\API\RegisterController@store');     
+
+//change password Routes End
 
 Route::middleware('auth:api')->group( function () {
     Route::resource('products', ProductController::class);

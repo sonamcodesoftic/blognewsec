@@ -22,25 +22,25 @@ class CreateUsersTable extends Migration
             $table->numeric('is_admin')->nullable();
 
             $table->string('lname');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('ip');
             $table->string('browser');
             $table->string('country');
             $table->string('device');
-            $table->string('key');
-            $table->string('token');
-            $table->string('countrycode');
-            $table->string('fcmtoken');
-            $table->string('address');
-            $table->string('profile');
-            $table->string('state');
-            $table->string('nationality');
-            $table->string('gender');
-            $table->string('date_of_birth');
-            $table->string('city');
-            $table->string('pincode');
-            $table->string('userrole');
-            $table->string('status');
+            $table->string('key')->nullable();
+            $table->string('token')->nullable();
+            $table->string('countrycode')->nullable();
+            $table->string('fcmtoken'->nullable());
+            $table->string('address')->nullable();
+            $table->string('profile')->nullable();
+            $table->string('state')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('date_of_birth')->nullable();
+            $table->string('city')->nullable();
+            $table->string('pincode')->nullable();
+            $table->string('userrole')->nullable();
+            $table->string('status')->nullable();
 
             
             $table->rememberToken();
